@@ -28,18 +28,33 @@ def TIC_():
                 return False, 2
         return True, 3
 
+    def input_fun(player):
+        while True:
+            try:
+                input_ = int(input('{} goes first.(input a number 1-9): '.format(player)))
+                break
+            except ValueError:
+                print('Please enter a number 1-9+')
+        while True:
+            if 0 < input_ < 10:
+                return input_
+                break
+            else:
+                print('Please enter a number 1-9')
+                input_ = int(input('Player 1 goes first.(input a number 1-9): '))
+
     x_r = [' ' for i in range(9)]
     player1, player2 = player()
-    input1 = int(input('Player 1 goes first.(input a number 1-9): '))
-
+    x = list(range(1, 10))
+    board_fun(x)
+    input1 = input_fun("player1")
     x_r.insert(input1 - 1, player1)
     x_r.pop(input1)
     board_fun(loc=x_r)
 
     while True:
-
         while True:
-            input2 = int(input('Player 2 goes.(input a number 1-9): '))
+            input2 = input_fun("player2")
             if x_r[input2 - 1] == ' ':
                 x_r.insert(input2 - 1, player2)
                 x_r.pop(input2)
@@ -53,7 +68,7 @@ def TIC_():
             break
 
         while True:
-            input1 = int(input('Player 1 goes.(input a number 1-9): '))
+            input1 = input_fun("player1")
             if x_r[input1 - 1] == ' ':
                 x_r.insert(input1 - 1, player1)
                 x_r.pop(input1)
@@ -63,4 +78,8 @@ def TIC_():
                 print('There is already occupyed.Please enter another number(input a number 1-9): ')
         if control_fun(x_r, player1, player2)[1] == 1:
             print('player 1 wins !')
+            break
+
+        if ' ' not in x_r:
+            print('Tie')
             break
